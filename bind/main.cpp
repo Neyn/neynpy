@@ -32,6 +32,10 @@ PYBIND11_MODULE(neynpy, _m)
     py::class_<Request> request(m, "Request");
     py::class_<Response> response(m, "Response");
 
+    m.attr("Major") = NEYNXX_VERSION_MAJOR;
+    m.attr("Minor") = NEYNXX_VERSION_MINOR;
+    m.attr("Patch") = NEYNXX_VERSION_PATCH;
+
     py::enum_<Error>(server, "Error")
         .value("None", Error::None)
         .value("GeneralError", Error::GeneralError)
