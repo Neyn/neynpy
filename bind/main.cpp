@@ -19,6 +19,7 @@ struct Server_
     }
     Error run()
     {
+        config.threads = 1;
         server.config = config;
         return server.run();
     }
@@ -137,8 +138,8 @@ PYBIND11_MODULE(neynpy, _m)
         .def_readwrite("port", &Config::port)
         .def_readwrite("address", &Config::address)
         .def_readwrite("timeout", &Config::timeout)
-        .def_readwrite("limit", &Config::limit)
-        .def_readwrite("threads", &Config::threads);
+        .def_readwrite("limit", &Config::limit);
+    // .def_readwrite("threads", &Config::threads);
 
     server.def(py::init<>())
         .def_readwrite("config", &Server_::config)
