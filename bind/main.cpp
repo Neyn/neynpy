@@ -2,9 +2,9 @@
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 
-#include "neynxx/neynxx.h"
+#include "src/neyn"
 
-using namespace Neynxx;
+using namespace Neyn;
 namespace py = pybind11;
 
 struct Server_
