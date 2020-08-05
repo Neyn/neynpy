@@ -61,4 +61,4 @@ neynpy.*
 *.pyc*
 
 # Temp ignore
-example
+example/simple.py
