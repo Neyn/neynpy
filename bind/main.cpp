@@ -2,7 +2,7 @@
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 
-#include "src/neyn"
+#include "src/neyn.h"
 
 using namespace Neyn;
 namespace py = pybind11;
@@ -33,9 +33,9 @@ PYBIND11_MODULE(neynpy, _m)
     py::class_<Request> request(m, "Request");
     py::class_<Response> response(m, "Response");
 
-    m.attr("Major") = NEYNXX_VERSION_MAJOR;
-    m.attr("Minor") = NEYNXX_VERSION_MINOR;
-    m.attr("Patch") = NEYNXX_VERSION_PATCH;
+    m.attr("Major") = NEYN_VERSION_MAJOR;
+    m.attr("Minor") = NEYN_VERSION_MINOR;
+    m.attr("Patch") = NEYN_VERSION_PATCH;
 
     py::enum_<Error>(server, "Error")
         .value("None", Error::None)
