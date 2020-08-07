@@ -2,7 +2,7 @@
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 
-#include "src/neyn.h"
+#include "neyn/neyn.h"
 
 using namespace Neyn;
 namespace py = pybind11;

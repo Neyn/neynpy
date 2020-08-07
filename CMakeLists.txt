@@ -7,9 +7,9 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 file(GLOB SOURCES
-    "${CNEYN_INCLUDE_DIR}/src/*.c"
-    "${NEYN_INCLUDE_DIR}/src/*.cpp")
-configure_file("neynxx/src/config.h.in" "config.h")
+    "${CNEYN_INCLUDE_DIR}/cneyn/*.c"
+    "${NEYN_INCLUDE_DIR}/neyn/*.cpp")
+configure_file("neynxx/src/neyn/config.h.in" "config.h")
 
 add_subdirectory(pybind11)
 pybind11_add_module(neynpy ${SOURCES} bind/main.cpp)
