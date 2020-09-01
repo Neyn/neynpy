@@ -64,9 +64,9 @@ class CMakeBuild(build_ext):
 setup(
     name='neynpy',
     version='0.1.0',
-    author='Shahriar Rezghi',
-    author_email='shahriar25.ss@gmail.com',
-    description='Fast HTTP Server Library',
+    author='Shahriar Rezghi, Ahmad Zolfaghari',
+    author_email='shahriar25.ss@gmail.com, ah8ad3@gmail.com',
+    description='Neynpy super fast http library',
     long_description='',
     packages=find_packages('src'),
     package_dir={'': 'src'},
