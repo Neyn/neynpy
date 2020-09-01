@@ -55,10 +55,8 @@ compile_commands.json
 build
 dist
 neynpy.*
+src/src.egg-info
 
 # Ide
 .idea
 *.pyc*
-
-# Temp ignore
-example/simple.py

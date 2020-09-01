@@ -4,7 +4,7 @@ import sys
 import platform
 import subprocess
 
-from setuptools import setup, Extension
+from setuptools import setup, Extension, find_packages
 from setuptools.command.build_ext import build_ext
 from distutils.version import LooseVersion
 
@@ -63,7 +63,14 @@ class CMakeBuild(build_ext):
 
 setup(
     name='neynpy',
-    ext_modules=[CMakeExtension('neynpy')],
+    version='0.1.0',
+    author='Shahriar Rezghi',
+    author_email='shahriar25.ss@gmail.com',
+    description='Fast HTTP Server Library',
+    long_description='',
+    packages=find_packages('src'),
+    package_dir={'': 'src'},
+    ext_modules=[CMakeExtension('neynpy/neynpy')],
     cmdclass=dict(build_ext=CMakeBuild),
     zip_safe=False,
 )
