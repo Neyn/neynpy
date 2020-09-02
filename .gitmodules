@@ -1,0 +1,6 @@
+[submodule "src/neynxx"]
+	path = src/neynxx
+	url = https://github.com/Neyn/neynxx.git
+[submodule "src/pybind11"]
+	path = src/pybind11
+	url = https://github.com/pybind/pybind11.git
