@@ -1,5 +1,5 @@
 from neynpy.http.response import Response
-from neynpy.neynpy import impl
+import neynpy.impl as impl
 from neynpy.utils import exceptions, const
 from neynpy.core.route import Router
 

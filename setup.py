@@ -70,7 +70,7 @@ setup(
     long_description='',
     packages=find_packages('src'),
     package_dir={'': 'src'},
-    ext_modules=[CMakeExtension('neynpy/neynpy')],
+    ext_modules=[CMakeExtension('neynpy/impl')],
     cmdclass=dict(build_ext=CMakeBuild),
     zip_safe=False,
 )

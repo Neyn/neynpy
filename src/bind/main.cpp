@@ -19,15 +19,14 @@ struct Server_
     }
     Error run()
     {
-        config.threads = 1;
         server.config = config;
-        return server.run();
+        return server.single();
     }
 };
 
-PYBIND11_MODULE(neynpy, _m)
+PYBIND11_MODULE(impl, m)
 {
-    py::module m = _m.def_submodule("impl");
+    // py::module m = _m.def_submodule("impl");
     py::class_<Config> config(m, "Config");
     py::class_<Server_> server(m, "Server");
     py::class_<Request> request(m, "Request");
@@ -119,6 +118,10 @@ PYBIND11_MODULE(neynpy, _m)
         .value("NetworkAuthenticationRequired", Status::NetworkAuthenticationRequired)
         .value("NetworkConnectTimeoutError", Status::NetworkConnectTimeoutError);
 
+    py::enum_<Address>(config, "Address")  //
+        .value("IPV4", Address::IPV4)
+        .value("IPV6", Address::IPV6);
+
     request.def(py::init<>())
         .def_readwrite("address", &Request::address)
         .def_readwrite("port", &Request::port)
@@ -136,6 +139,7 @@ PYBIND11_MODULE(neynpy, _m)
 
     config.def(py::init<>())
         .def_readwrite("port", &Config::port)
+        .def_readwrite("ipvn", &Config::ipvn)
         .def_readwrite("address", &Config::address)
         .def_readwrite("timeout", &Config::timeout)
         .def_readwrite("limit", &Config::limit);
