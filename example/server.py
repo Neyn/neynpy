@@ -3,11 +3,14 @@ from neynpy.core.route import Router
 from neynpy.http.response import Response
 
 
-def about():
+def about(request):
     return Response('return from about view')
 
 
-def main():
+def main(request):
+    print(request.header.get('User-Agent'))
+    print(request.path)
+    print(request.method)
     return Response('hello from NeynPy')
 
 
