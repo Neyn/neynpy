@@ -1,5 +1,6 @@
 from neynpy.http.response import Response
-import neynpy.impl as impl
+from neynpy.http.request import Request
+from neynpy.impl import impl
 from neynpy.utils import exceptions, const
 from neynpy.core.route import Router
 
@@ -48,12 +49,11 @@ class Server:
         # Temporary
         print('neynpy run on: http://{}:{}'.format(ip, port))
 
-    def handler(self, req):
-        # print(self.dummy)
-        # print(req.header)
-        # print(req.path)
+    @staticmethod
+    def make_request(req):
+        return Request().new_request(req)
 
-        response = self.router.get_handler(req.path)()
+    def make_response(self, response):
         self.validate_response(response)
 
         res = impl.Response()
@@ -61,6 +61,10 @@ class Server:
         # res.status = response.status_code
         res.header = response.header
         return res
+
+    def handler(self, req):
+        response = self.router.get_handler(req.path)(self.make_request(req))
+        return self.make_response(response)
 
     def run(self):
         self.server.run()
