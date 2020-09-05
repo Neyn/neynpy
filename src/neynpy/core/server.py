@@ -1,8 +1,9 @@
-from neynpy.http.response import Response
-from neynpy.http.request import Request
 import neynpy.impl as impl
-from neynpy.utils import exceptions, const
+
 from neynpy.core.route import Router
+from neynpy.http.request import Request
+from neynpy.http.response import Response
+from neynpy.utils import exceptions, const
 
 
 class Server:
@@ -58,7 +59,7 @@ class Server:
 
         res = impl.Response()
         res.body = response.text
-        # res.status = response.status_code
+        res.status = const.STATUS_CODE.get(response.status_code, const.STATUS_DEFAULT)
         res.header = response.header
         return res
 

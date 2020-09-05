@@ -1,3 +1,5 @@
+from neynpy import impl
+
 VALIDATION_ERRORS = {
     'ip_type': 'ip must be string, default: "0.0.0.0"',
     'port_type': 'port can be int and string, default: 9090',
@@ -11,3 +13,18 @@ VALIDATION_ERRORS = {
 
 # This will be complete
 ALLOW_HTTP_METHODS = ['GET', 'POST', 'DELETE', 'PUT', 'PATCH']
+
+
+STATUS_OK = 200
+STATUS_CREATED = 201
+STATUS_NOT_FOUND = 404
+# TODO: add more status
+
+status = impl.Response().Status
+STATUS_DEFAULT = status.OK
+
+STATUS_CODE = {
+    STATUS_OK: status.OK,
+    STATUS_CREATED: status.Created,
+    STATUS_NOT_FOUND: status.NotFound,
+}

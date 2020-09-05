@@ -4,13 +4,11 @@ from neynpy.http.response import Response
 
 
 def about(request):
-    return Response('return from about view')
+    return Response('return from about view', 200)
 
 
 def main(request):
-    print(request.header.get('User-Agent'))
-    print(request.path)
-    print(request.method)
+    print(request.method, request.path)
     return Response('hello from NeynPy')
 
 

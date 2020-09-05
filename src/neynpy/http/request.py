@@ -2,16 +2,30 @@ from neynpy.utils import exceptions, const
 
 
 class Request:
+    """
+    Request class to match all binding request
+    To python version and also add some other high level item
+    """
     def __init__(self, *args, **kwargs):
         self.method = None
         self.header = None
         self.path = None
+        self.body = None
+        self.address = None
+        self.address_port = None
+        self.major = None
+        self.minor = None
 
     def new_request(self, req):
         params = {
             'method': req.method,
             'header': req.header,
-            'path': req.path
+            'path': req.path,
+            'body': req.body,
+            'address': req.address,
+            'major': req.major,
+            'address_port': req.port,
+            'minor': req.minor,
         }
         self.validate_params(**params)
         self.populate_params(**params)

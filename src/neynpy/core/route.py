@@ -1,7 +1,13 @@
 from neynpy.http.response import Response
+from neynpy.utils import const
 
 
 class Router:
+    """
+    Router class will add some handler and manage them
+    After a while will support methods control also
+    Serving files and etc
+    """
     def __init__(self):
         self.routes = {}
 
@@ -30,9 +36,9 @@ class Router:
         return self.routes.get(path, self.default_404)
 
     @staticmethod
-    def default_404():
+    def default_404(req):
         """
         The default 404 page if no path found
         :return: Response('not found', 404)
         """
-        return Response('not found', 404)
+        return Response('not found', const.STATUS_NOT_FOUND)
