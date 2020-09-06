@@ -64,7 +64,7 @@ class Server:
         return res
 
     def handler(self, req):
-        response = self.router.get_handler(req.path)(self.make_request(req))
+        response = self.router.get_handler(req.path, req.method)(self.make_request(req))
         return self.make_response(response)
 
     def run(self):

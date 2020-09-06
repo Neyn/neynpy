@@ -14,7 +14,7 @@ def main(request):
 
 router = Router()
 router.add_handler('/', main)
-router.add_handler('/about', about)
+router.add_handler('/about', about, methods=['POST'])
 
 _server = Server(ip='127.0.0.1', port='9090', router=router)
 _server.run()

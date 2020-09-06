@@ -9,6 +9,7 @@ VALIDATION_ERRORS = {
     'http_methods': 'At this level you can only use GET, POST, PUT, PATCH, DELETE',
     'header_type': 'header must be dictionary',
     'path_type': 'path must be string',
+    'methods_type': 'methods must be a list of strings, example: ["GET", "POST"]',
 }
 
 # This will be complete
@@ -18,6 +19,7 @@ ALLOW_HTTP_METHODS = ['GET', 'POST', 'DELETE', 'PUT', 'PATCH']
 STATUS_OK = 200
 STATUS_CREATED = 201
 STATUS_NOT_FOUND = 404
+STATUS_METHOD_NOT_AVAILABLE = 405
 # TODO: add more status
 
 status = impl.Response().Status
@@ -27,4 +29,5 @@ STATUS_CODE = {
     STATUS_OK: status.OK,
     STATUS_CREATED: status.Created,
     STATUS_NOT_FOUND: status.NotFound,
+    STATUS_METHOD_NOT_AVAILABLE: status.MethodNotAllowed,
 }
