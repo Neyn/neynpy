@@ -1,3 +1,3 @@
 git pull origin master
-git submodule update --recursive --remote neynxx
+git submodule update --recursive --remote
 python setup.py install
