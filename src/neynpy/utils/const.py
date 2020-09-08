@@ -6,7 +6,7 @@ VALIDATION_ERRORS = {
     'timeout_type': 'timeout can be int and string, default: 0',
     'router_type': 'router must be instance of "neynpy.core.route.Router"',
     'response_type': 'response must be instance of "neynpy.http.response.Response"',
-    'http_methods': 'At this level you can only use GET, POST, PUT, PATCH, DELETE',
+    'http_methods': 'method not supported',
     'header_type': 'header must be dictionary',
     'path_type': 'path must be string',
     'methods_type': 'methods must be a list of strings, example: ["GET", "POST"]',

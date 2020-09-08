@@ -62,7 +62,7 @@ class Router:
         The default 404 page if no path found
         :return: Response('not found', 404)
         """
-        return Response('Not Found', const.STATUS_NOT_FOUND)
+        return Response('Not Found', const.STATUS_NotFound)
 
     @staticmethod
     def default_405(req):
@@ -70,4 +70,4 @@ class Router:
         The default 405 page if method not allowed
         :return: Response('Method Not Allowed', 405)
         """
-        return Response('Method Not Allowed', const.STATUS_METHOD_NOT_AVAILABLE)
+        return Response('Method Not Allowed', const.STATUS_MethodNotAllowed)
