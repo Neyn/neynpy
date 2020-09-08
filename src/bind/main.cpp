@@ -11,21 +11,15 @@ struct Filer_ : Filer
 {
     using Handler = std::function<Response(const Request &request)>;
 
-    Handler _notpath, _notfound;
+    Handler _error;
 
     Filer_()
     {
-        notpath = [this](Request &request, Response &response) { response = _notpath(request); };
-        notfound = [this](Request &request, Response &response) { response = _notfound(request); };
+        error = [this](Request &request, Response &response) { response = _error(request); };
 
-        _notpath = [](const Request &) {
+        _error = [](const Request &) {
             Response response;
             response.status = Status::NotFound;
-            return response;
-        };
-        _notfound = [](const Request &) {
-            Response response;
-            response.status = Status::BadRequest;
             return response;
         };
     }
@@ -152,8 +146,7 @@ PYBIND11_MODULE(impl, m)
     filer.def(py::init<>())
         .def_readwrite("base", &Filer_::base)
         .def_readwrite("root", &Filer_::root)
-        .def_readwrite("notpath", &Filer_::_notpath)
-        .def_readwrite("notfound", &Filer_::_notfound)
+        .def_readwrite("error", &Filer_::_error)
         .def("handle", &Filer_::handle);
 
     request.def(py::init<>())
