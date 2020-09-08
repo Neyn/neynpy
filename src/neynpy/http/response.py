@@ -10,7 +10,7 @@ class Response:
         if header is None:
             header = {'Content-Type': 'text/html'}
         if status_code is None:
-            status_code = const.STATUS_OK
+            status_code = const.STATUS_Ok
         self.text = text
         self.status_code = status_code
         self.header = header
