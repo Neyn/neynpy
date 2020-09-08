@@ -7,15 +7,27 @@
 using namespace Neyn;
 namespace py = pybind11;
 
+struct Response_ : Response
+{
+    bool open(const std::string &path)
+    {
+        file = fopen(path.c_str(), "rb");
+        return file != NULL;
+    }
+};
+
 struct Server_
 {
     Server server;
     Config config;
-    std::function<Response(const Request &request)> handler;
+    std::function<Response_(const Request &request)> handler;
 
     Server_()
     {
-        server.handler = [this](Request &request, Response &response) { response = handler(request); };
+        server.handler = [this](Request &request, Response &response) {
+            auto _response = handler(request);
+            response = static_cast<Response &>(_response);
+        };
     }
     Error run()
     {
@@ -30,7 +42,7 @@ PYBIND11_MODULE(impl, m)
     py::class_<Config> config(m, "Config");
     py::class_<Server_> server(m, "Server");
     py::class_<Request> request(m, "Request");
-    py::class_<Response> response(m, "Response");
+    py::class_<Response_> response(m, "Response");
 
     m.attr("Major") = NEYN_VERSION_MAJOR;
     m.attr("Minor") = NEYN_VERSION_MINOR;
@@ -133,9 +145,9 @@ PYBIND11_MODULE(impl, m)
         .def_readwrite("header", &Request::header);
 
     response.def(py::init<>())
-        .def_readwrite("status", &Response::status)
-        .def_readwrite("body", &Response::body)
-        .def_readwrite("header", &Response::header);
+        .def_readwrite("status", &Response_::status)
+        .def_readwrite("body", &Response_::body)
+        .def_readwrite("header", &Response_::header);
 
     config.def(py::init<>())
         .def_readwrite("port", &Config::port)
