@@ -7,42 +7,57 @@
 using namespace Neyn;
 namespace py = pybind11;
 
-struct Response_ : Response
+struct Filer_ : Filer
 {
-    bool open(const std::string &path)
+    using Handler = std::function<Response(const Request &request)>;
+
+    Handler _notpath, _notfound;
+
+    Filer_()
     {
-        file = fopen(path.c_str(), "rb");
-        return file != NULL;
+        notpath = [this](Request &request, Response &response) { response = _notpath(request); };
+        notfound = [this](Request &request, Response &response) { response = _notfound(request); };
+
+        _notpath = [](const Request &) {
+            Response response;
+            response.status = Status::NotFound;
+            return response;
+        };
+        _notfound = [](const Request &) {
+            Response response;
+            response.status = Status::BadRequest;
+            return response;
+        };
+    }
+
+    Response handle(const Request &request)
+    {
+        Response response;
+        Filer::operator()(const_cast<Request &>(request), response);
+        return response;
     }
 };
 
-struct Server_
+struct Server_ : Server
 {
-    Server server;
-    Config config;
-    std::function<Response_(const Request &request)> handler;
+    using Handler = std::function<Response(const Request &request)>;
+
+    Handler _handler;
 
     Server_()
     {
-        server.handler = [this](Request &request, Response &response) {
-            auto _response = handler(request);
-            response = static_cast<Response &>(_response);
-        };
-    }
-    Error run()
-    {
-        server.config = config;
-        return server.single();
+        handler = [this](Request &request, Response &response) { response = _handler(request); };
     }
 };
 
 PYBIND11_MODULE(impl, m)
 {
     // py::module m = _m.def_submodule("impl");
+    py::class_<Filer_> filer(m, "Filer");
     py::class_<Config> config(m, "Config");
     py::class_<Server_> server(m, "Server");
     py::class_<Request> request(m, "Request");
-    py::class_<Response_> response(m, "Response");
+    py::class_<Response> response(m, "Response");
 
     m.attr("Major") = NEYN_VERSION_MAJOR;
     m.attr("Minor") = NEYN_VERSION_MINOR;
@@ -134,6 +149,13 @@ PYBIND11_MODULE(impl, m)
         .value("IPV4", Address::IPV4)
         .value("IPV6", Address::IPV6);
 
+    filer.def(py::init<>())
+        .def_readwrite("base", &Filer_::base)
+        .def_readwrite("root", &Filer_::root)
+        .def_readwrite("notpath", &Filer_::_notpath)
+        .def_readwrite("notfound", &Filer_::_notfound)
+        .def("handle", &Filer_::handle);
+
     request.def(py::init<>())
         .def_readwrite("address", &Request::address)
         .def_readwrite("port", &Request::port)
@@ -145,9 +167,10 @@ PYBIND11_MODULE(impl, m)
         .def_readwrite("header", &Request::header);
 
     response.def(py::init<>())
-        .def_readwrite("status", &Response_::status)
-        .def_readwrite("body", &Response_::body)
-        .def_readwrite("header", &Response_::header);
+        .def_readwrite("status", &Response::status)
+        .def_readwrite("body", &Response::body)
+        .def_readwrite("header", &Response::header)
+        .def("open", &Response::open);
 
     config.def(py::init<>())
         .def_readwrite("port", &Config::port)
@@ -159,6 +182,6 @@ PYBIND11_MODULE(impl, m)
 
     server.def(py::init<>())
         .def_readwrite("config", &Server_::config)
-        .def_readwrite("handler", &Server_::handler)
-        .def("run", &Server_::run);
+        .def_readwrite("handler", &Server_::_handler)
+        .def("run", &Server_::single);
 }
