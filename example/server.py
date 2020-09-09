@@ -9,7 +9,7 @@ def about(request):
 
 def main(request):
     print(request.method, request.path)
-    return Response('hello from NeynPy')
+    return Response('a.html', is_file=True)
 
 
 router = Router()

@@ -1,3 +1,5 @@
+import os
+
 from neynpy import impl
 
 VALIDATION_ERRORS = {
@@ -146,3 +148,5 @@ STATUS_CODE = {
     STATUS_NetworkAuthenticationRequired: status.NetworkAuthenticationRequired,
     STATUS_NetworkConnectTimeoutError: status.NetworkConnectTimeoutError,
 }
+
+BASE_PATH = os.getcwd() + '/'

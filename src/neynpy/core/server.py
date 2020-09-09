@@ -30,11 +30,6 @@ class Server:
         if not isinstance(router, Router):
             raise exceptions.ValidationError(message=const.VALIDATION_ERRORS.get('router_type'))
 
-    @staticmethod
-    def validate_response(response):
-        if not isinstance(response, Response):
-            raise exceptions.ValidationError(message=const.VALIDATION_ERRORS.get('response_type'))
-
     def config_server(self, *args, **kwargs):
         ip = kwargs.get('ip', '0.0.0.0')
         port = int(kwargs.get('port', 9090))
@@ -54,14 +49,9 @@ class Server:
     def make_request(req):
         return Request().new_request(req)
 
-    def make_response(self, response):
-        self.validate_response(response)
-
-        res = impl.Response()
-        res.body = response.text
-        res.status = const.STATUS_CODE.get(response.status_code, const.STATUS_DEFAULT)
-        res.header = response.header
-        return res
+    @staticmethod
+    def make_response(res):
+        return Response('').new_response(res=res)
 
     def handler(self, req):
         response = self.router.get_handler(req.path, req.method)(self.make_request(req))
