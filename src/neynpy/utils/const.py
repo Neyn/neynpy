@@ -15,7 +15,7 @@ VALIDATION_ERRORS = {
 }
 
 # This will be complete
-ALLOW_HTTP_METHODS = ['GET', 'HEAD', 'POST', 'DELETE', 'PUT', 'PATCH', 'CONNECT', 'OPTIONS', 'TRACE']
+ALLOWED_HTTP_METHODS = ['GET', 'HEAD', 'POST', 'DELETE', 'PUT', 'PATCH', 'CONNECT', 'OPTIONS', 'TRACE']
 
 STATUS_Continue = 100
 STATUS_SwitchingProtocols = 101

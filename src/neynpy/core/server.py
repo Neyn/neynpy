@@ -10,7 +10,6 @@ class Server:
     def __init__(self, *args, **kwargs):
         self.validate_kwargs(**kwargs)
         self.server = impl.Server()
-        self.dummy = 10
         self.server.handler = self.handler
         self.config_server(*args, **kwargs)
         self.router = kwargs.get('router')

@@ -37,7 +37,7 @@ class Request:
         header = kwargs.get('header', None)
         path = kwargs.get('path', None)
 
-        if method not in const.ALLOW_HTTP_METHODS:
+        if method not in const.ALLOWED_HTTP_METHODS:
             raise exceptions.ValidationError(message=const.VALIDATION_ERRORS.get('http_methods'))
 
         if not isinstance(header, dict):
