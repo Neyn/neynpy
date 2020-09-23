@@ -20,7 +20,7 @@ class Router:
     @staticmethod
     def clean_methods(methods):
         if not methods:
-            methods = const.ALLOW_HTTP_METHODS
+            methods = const.ALLOWED_HTTP_METHODS
         if not isinstance(methods, list):
             raise exceptions.ValidationError(const.VALIDATION_ERRORS.get('methods_type'))
         return [item.upper() for item in methods]
