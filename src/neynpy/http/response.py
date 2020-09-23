@@ -46,3 +46,13 @@ class Response:
 
     def delete_cookie(self):
         pass
+
+
+class Serve:
+    def __init__(self, base, root):
+        self.filer = impl.Filer()
+        self.filer.base = base
+        self.filer.root = root
+
+    def new_response(self):
+        return self.filer.handle

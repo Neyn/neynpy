@@ -2,7 +2,7 @@ import neynpy.impl as impl
 
 from neynpy.core.route import Router
 from neynpy.http.request import Request
-from neynpy.http.response import Response
+from neynpy.http.response import Response, Serve
 from neynpy.utils import exceptions, const
 
 
@@ -49,12 +49,15 @@ class Server:
         return Request().new_request(req)
 
     @staticmethod
-    def make_response(res):
-        return Response('').new_response(res=res)
+    def make_response(res, req):
+        if isinstance(res, Response):
+            return Response('').new_response(res=res)
+        elif isinstance(res, Serve):
+            return res.new_response()(req)
 
     def handler(self, req):
         response = self.router.get_handler(req.path, req.method)(self.make_request(req))
-        return self.make_response(response)
+        return self.make_response(response, req)
 
     def run(self):
         self.server.run()

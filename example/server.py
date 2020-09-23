@@ -1,6 +1,6 @@
 from neynpy.core.server import Server
 from neynpy.core.route import Router
-from neynpy.http.response import Response
+from neynpy.http.response import Response, Serve
 
 
 def about(request):
@@ -12,9 +12,15 @@ def main(request):
     return Response('a.html', is_file=True)
 
 
+def files(request):
+    print(request.method, request.path)
+    return Serve('/', '/home/ahmad/')
+
+
 router = Router()
 router.add_handler('/', main)
 router.add_handler('/about', about, methods=['POST'])
+router.add_handler('/files', files)
 
 _server = Server(ip='127.0.0.1', port='9090', router=router)
 _server.run()
