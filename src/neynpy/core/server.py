@@ -17,7 +17,7 @@ class Server:
     @staticmethod
     def validate_kwargs(**kwargs):
         ip = kwargs.get('ip', '0.0.0.0')
-        port = kwargs.get('port', 9090)
+        port = kwargs.get('port', 7070)
         timeout = kwargs.get('timeout', 0)
         router = kwargs.get('router', 0)
         if not isinstance(ip, str):
@@ -31,7 +31,7 @@ class Server:
 
     def config_server(self, *args, **kwargs):
         ip = kwargs.get('ip', '0.0.0.0')
-        port = int(kwargs.get('port', 9090))
+        port = int(kwargs.get('port', 7070))
         timeout = int(kwargs.get('timeout', 0))
 
         config = impl.Config()

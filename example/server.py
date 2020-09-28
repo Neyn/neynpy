@@ -22,5 +22,5 @@ router.add_handler('/', main)
 router.add_handler('/about', about, methods=['POST'])
 router.add_handler('/files', files)
 
-_server = Server(ip='127.0.0.1', port='9090', router=router)
+_server = Server(ip='127.0.0.1', port='7070', router=router)
 _server.run()
