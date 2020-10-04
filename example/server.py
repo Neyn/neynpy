@@ -14,7 +14,7 @@ def main(request):
 
 def files(request):
     print(request.method, request.path)
-    return Serve('/', '/home/ahmad/Downloads')
+    return Serve('/', '/home/')
 
 
 router = Router()
