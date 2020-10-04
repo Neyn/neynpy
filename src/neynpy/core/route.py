@@ -10,6 +10,7 @@ class Router:
     """
     def __init__(self):
         self.routes = {}
+        self.prefix_routes = {}
 
     @staticmethod
     def clean_path(path):
@@ -25,8 +26,9 @@ class Router:
             raise exceptions.ValidationError(const.VALIDATION_ERRORS.get('methods_type'))
         return [item.upper() for item in methods]
 
-    def add_handler(self, path, handler, methods=None):
+    def add_handler(self, path, handler, methods=None, prefix=False):
         """
+        :param prefix: if route has to serve files
         :param path: the path of routing
         :param handler: the handler function of the path
         :param methods: specify the methods of this handler
@@ -34,11 +36,19 @@ class Router:
         """
         methods = self.clean_methods(methods)
         path = self.clean_path(path)
-        self.routes[path] = {'handler': handler, 'methods': methods}
+
+        if prefix:
+            self.prefix_routes[path] = {'handler': handler, 'methods': methods}
+        else:
+            self.routes[path] = {'handler': handler, 'methods': methods}
 
     def _get_handler(self, path, method):
         path = self.clean_path(path)
         route = self.routes.get(path, None)
+        if not route:
+            for key, value in self.prefix_routes.items():
+                if path.startswith(key):
+                    route = value
         if not route:
             return self.default_404
 

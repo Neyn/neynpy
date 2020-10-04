@@ -14,13 +14,13 @@ def main(request):
 
 def files(request):
     print(request.method, request.path)
-    return Serve('/', '/home/')
+    return Serve('/', '/home/ahmad/Downloads')
 
 
 router = Router()
 router.add_handler('/', main)
 router.add_handler('/about', about, methods=['POST'])
-router.add_handler('/files', files)
+router.add_handler('/files', files, prefix=True)
 
 _server = Server(ip='127.0.0.1', port='7070', router=router)
 _server.run()
