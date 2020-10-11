@@ -42,29 +42,31 @@ class Router:
         else:
             self.routes[path] = {'handler': handler, 'methods': methods}
 
-    def _get_handler(self, path, method):
+    def _get_handler(self, req):
+        path = req.path
+        method = req.method
         path = self.clean_path(path)
         route = self.routes.get(path, None)
         if not route:
             for key, value in self.prefix_routes.items():
                 if path.startswith(key):
+                    path = path.replace(key, '/')[:-1]
                     route = value
         if not route:
-            return self.default_404
+            return self.default_404, path
 
         if method in route.get('methods', []):
-            return route.get('handler')
-        return self.default_405
+            return route.get('handler'), path
+        return self.default_405, path
 
-    def get_handler(self, path, method):
+    def get_handler(self, req):
         """
         get_handler return the handler function of input path
-        :param path: the path to be returned
-        :param method:
+        :param req: the request of impl
         :return: handler function or None
         """
 
-        return self._get_handler(path, method)
+        return self._get_handler(req)
 
     @staticmethod
     def default_404(req):

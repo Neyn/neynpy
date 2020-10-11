@@ -9,12 +9,12 @@ def about(request):
 
 def main(request):
     print(request.method, request.path)
-    return Response('a.html', is_file=True)
+    return Response('neyn.html', is_file=True)
 
 
 def files(request):
     print(request.method, request.path)
-    return Serve('/', '/home/')
+    return Serve('/home/ah8ad3/')
 
 
 router = Router()
