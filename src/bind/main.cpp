@@ -15,6 +15,7 @@ struct Filer_ : Filer
 
     Filer_()
     {
+        base = "/";
         error = [this](Request &request, Response &response) { response = _error(request); };
 
         _error = [](const Request &) {
@@ -144,7 +145,6 @@ PYBIND11_MODULE(impl, m)
         .value("IPV6", Address::IPV6);
 
     filer.def(py::init<>())
-        .def_readwrite("base", &Filer_::base)
         .def_readwrite("root", &Filer_::root)
         .def_readwrite("error", &Filer_::_error)
         .def("handle", &Filer_::handle);
