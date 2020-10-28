@@ -5,7 +5,7 @@
 - [License](#license)
 
 # Neynpy
-```Neynpy`` is a http library with Python interface. You can checkout [C](https://github.com/Neyn/cneyn) and [C++](https://github.com/Neyn/neynxx) interfaces.
+```Neynpy``` is a http library with Python interface. You can checkout [C](https://github.com/Neyn/cneyn) and [C++](https://github.com/Neyn/neynxx) interfaces.
 
 Since the project is new there are some limitations:
 
